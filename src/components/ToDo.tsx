@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ModalComponents from './Modals';
 
 type Todo = {
   id: number | null;
@@ -12,9 +13,20 @@ function TodoApp() {
   const [todos, setTodos] = useState<Todo[]>([]); // 儲存所有待辦事項
   const [editingId, setEditingId] = useState<number | null>(null); // 編輯中的 ID
 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target; // 取得輸入框的名稱和值
     setUser({ ...user, [name]: value }); // 更新表單狀態
+  };
+
+  const addTodoFromModal = (text: string) => {
+    // 從模態視窗新增的待辦事項
+    if (text.trim() === "") return;
+    const newTodo: Todo = {
+      id: Date.now(),
+      text,
+    };
+    setTodos([newTodo, ...todos]); // 更新列表
   };
 
   const addTodo = () => {
@@ -75,7 +87,12 @@ function TodoApp() {
             </button>
           </>
         ) : (
+          <>
           <button onClick={addTodo}>Add</button>
+    
+          <ModalComponents addTodo={addTodoFromModal} /> {/* 傳遞新增邏輯到模態視窗 */}
+          </>
+          
         )}
       </div>
       {/* 顯示待辦事項 */}
@@ -88,6 +105,8 @@ function TodoApp() {
           </li>
         ))}
       </ul>
+
+    
     </div>
   );
 }
