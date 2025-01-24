@@ -25,13 +25,13 @@ function ModalComponents({ addTodo }: { addTodo: (text: string) => void }) {
         className="btn btn-primary"
         style={{ marginLeft: "10px" }}
       >
-        Open Modal
+        新增(模糊視窗)
       </button>
 
       {/* 模態視窗 */}
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Task in Modal</Modal.Title>
+          <Modal.Title>新增資料</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input
@@ -45,10 +45,10 @@ function ModalComponents({ addTodo }: { addTodo: (text: string) => void }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShow(false)}>
-            Close
+            取消
           </Button>
           <Button variant="primary" onClick={handleAdd}>
-            Add Task
+            新增
           </Button>
         </Modal.Footer>
       </Modal>

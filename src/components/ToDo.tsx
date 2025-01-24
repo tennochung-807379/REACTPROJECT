@@ -8,11 +8,23 @@ type Todo = {
 };
 
 function TodoApp() {
+
+  const defaultTodos: Todo[] = [
+    { id: 1, text: "Learn React" },
+    { id: 2, text: "Build a Todo App" },
+    { id: 3, text: "Practice TypeScript" },
+  ];
+
+
   const initialFormState: Todo = { id: null, text: "" }; // 初始化表單的狀態
   const [user, setUser] = useState(initialFormState); // 使用 `user` 作為表單的狀態
-  const [todos, setTodos] = useState<Todo[]>([]); // 儲存所有待辦事項
+  const [todos, setTodos] = useState<Todo[]>(defaultTodos); // 儲存所有待辦事項
   const [editingId, setEditingId] = useState<number | null>(null); // 編輯中的 ID
 
+
+
+
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target; // 取得輸入框的名稱和值
@@ -76,19 +88,19 @@ function TodoApp() {
         />
         {editingId ? (
           <>
-            <button onClick={saveEdit}>Save</button>
+            <button onClick={saveEdit}>儲存</button>
             <button
               onClick={() => {
                 setEditingId(null);
                 setUser(initialFormState); // 重置表單
               }}
             >
-              Cancel
+              取消
             </button>
           </>
         ) : (
           <>
-          <button onClick={addTodo}>Add</button>
+          <button onClick={addTodo}>新增</button>
     
           <ModalComponents addTodo={addTodoFromModal} /> {/* 傳遞新增邏輯到模態視窗 */}
           </>
@@ -96,14 +108,19 @@ function TodoApp() {
         )}
       </div>
       {/* 顯示待辦事項 */}
-      <ul>
+      <ul style={{marginTop:"10px"}}>
         {todos.map((todo) => (
-          <li key={todo.id} style={{ marginBottom: "20px" }}>
+          <li key={todo.id} style={{ marginBottom: "20px" ,textAlign: "left"}}>
             {todo.text}
-            <button className="btn btn-primary" onClick={() => startEditing(todo.id!, todo.text)}>Edit</button>
-            <button className="btn btn-danger" onClick={() => deleteTodo(todo.id!)}>Delete</button>              
+            <button className="btn btn-primary" onClick={() => startEditing(todo.id!, todo.text)} style={{ marginLeft: "10px" }}>Edit</button>
+            <button className="btn btn-danger" onClick={() => deleteTodo(todo.id!)} style={{ marginLeft: "10px" }}>Delete</button>              
           </li>
         ))}
+        {!todos ? (
+      <div className="spinner-border spinner-border-lg align-center"></div>
+    ) : !todos.length ? (
+      <div className="p-2">無任何資料</div>
+    ) : null}
       </ul>
 
     
